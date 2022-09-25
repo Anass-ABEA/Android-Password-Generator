@@ -1,4 +1,6 @@
-package com.thexcoders.mypasswordgenerator.models;
+package com.thexcoders.mypasswordgenerator.models.generators;
+
+import com.thexcoders.mypasswordgenerator.models.helpers.Helper;
 
 public class LowerCaseGenerator extends PasswordGenerator{
     private static final char CHAR_A = 'a';

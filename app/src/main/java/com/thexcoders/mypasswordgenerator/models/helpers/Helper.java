@@ -1,4 +1,4 @@
-package com.thexcoders.mypasswordgenerator.models;
+package com.thexcoders.mypasswordgenerator.models.helpers;
 
 public class Helper {
     public static int randomVal(int size){

@@ -1,4 +1,6 @@
-package com.thexcoders.mypasswordgenerator.models;
+package com.thexcoders.mypasswordgenerator.models.generators;
+
+import com.thexcoders.mypasswordgenerator.models.helpers.Helper;
 
 import java.util.ArrayList;
 

@@ -24,11 +24,27 @@
             android:text="Click on Generate"
             android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/btn_copy"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Copy" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_copy"
+                android:layout_width="0dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Copy" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Save" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="30dp"

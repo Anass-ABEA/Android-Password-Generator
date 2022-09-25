@@ -1,4 +1,6 @@
-package com.thexcoders.mypasswordgenerator.models;
+package com.thexcoders.mypasswordgenerator.models.generators;
+
+import com.thexcoders.mypasswordgenerator.models.helpers.Helper;
 
 public class SpecialCharGenerator extends PasswordGenerator {
     private static final char[] SPECIAL_CHAR_ARRAY = "?./!%*$^+-)]@(['{}#<>".toCharArray();

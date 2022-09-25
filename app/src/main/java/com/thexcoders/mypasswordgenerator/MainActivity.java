@@ -5,25 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.thexcoders.mypasswordgenerator.models.LowerCaseGenerator;
-import com.thexcoders.mypasswordgenerator.models.NumericGenerator;
-import com.thexcoders.mypasswordgenerator.models.PasswordGenerator;
-import com.thexcoders.mypasswordgenerator.models.SpecialCharGenerator;
-import com.thexcoders.mypasswordgenerator.models.UpperCaseGenerator;
+import com.thexcoders.mypasswordgenerator.models.database.DatabaseHelper;
+import com.thexcoders.mypasswordgenerator.models.database.SavePassword;
+import com.thexcoders.mypasswordgenerator.models.generators.LowerCaseGenerator;
+import com.thexcoders.mypasswordgenerator.models.generators.NumericGenerator;
+import com.thexcoders.mypasswordgenerator.models.generators.PasswordGenerator;
+import com.thexcoders.mypasswordgenerator.models.generators.SpecialCharGenerator;
+import com.thexcoders.mypasswordgenerator.models.generators.UpperCaseGenerator;
+import com.thexcoders.mypasswordgenerator.models.password.Password;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editPasswordSize;
     private TextView textPasswordGenerated,textErrorMessage;
     private CheckBox checkLower, checkUpper,checkSpecialChar, checkNumeric;
-    private Button btnGenerate, btnCopy;
+    private Button btnGenerate, btnCopy,btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
         clickListeners();
+
+        displaySavedPasswords(); //TODO : to be removed later
+    }
+
+    private void displaySavedPasswords() {
+        DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+        List<Password> passwordList = db.getPasswordList();
+        Log.e("PWD_LIST",passwordList.toString());
     }
 
     private void clickListeners() {
@@ -61,12 +75,20 @@ public class MainActivity extends AppCompatActivity {
             String passwrd = PasswordGenerator.generatePassword(passwordSize);
             textPasswordGenerated.setText(passwrd);
 
+            btnSave.setEnabled(true);
         });
 
         btnCopy.setOnClickListener(view ->{
             ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             manager.setPrimaryClip(ClipData.newPlainText("password",textPasswordGenerated.getText().toString()));
             Toast.makeText(this, "Password Copied", Toast.LENGTH_SHORT).show();
+        });
+
+        btnSave.setOnClickListener(view -> {
+            String genPwd = textPasswordGenerated.getText().toString();
+            Intent intent = new Intent(MainActivity.this, SavePassword.class);
+            intent.putExtra("pwd",genPwd);
+            startActivity(intent);
         });
     }
 
@@ -80,5 +102,8 @@ public class MainActivity extends AppCompatActivity {
         checkNumeric = findViewById(R.id.check_numeric);
         btnGenerate = findViewById(R.id.btn_generate);
         btnCopy = findViewById(R.id.btn_copy);
+        btnSave = findViewById(R.id.btn_save);
+
+        btnSave.setEnabled(false);
     }
 }
